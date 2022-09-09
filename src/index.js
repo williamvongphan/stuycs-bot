@@ -18,3 +18,5 @@ async function startServer() {
 
     server.start();
 }
+
+startServer();
