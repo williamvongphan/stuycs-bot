@@ -3,10 +3,30 @@ const path = require('path');
 const checkForNewEntries = require("../utils/checkForNewEntries");
 const parseEntryInformation = require("../utils/parseEntryInformation");
 
+const { createAppAuth } = require("@octokit/auth-app");
+const { Octokit } = require("@octokit/rest");
+
 const createIssue = async function(issue, app) {
-	const github = await app.auth({ type: "installation", installationId: issue.installationId });
-	const owner = issue.owner; const repo = issue.repo; const title = issue.title; const body = issue.body; const assignees = issue.assignees; const labels = issue.labels
-	return github.issues.create({ owner, repo, title, body, labels, assignees })
+	const auth = createAppAuth({
+		appId: app.appId,
+		privateKey: app.privateKey,
+	});
+
+	const installationAccessToken = await auth({ type: "installation", installationId: issue.installationId });
+
+	const octokit = new Octokit({
+		auth: installationAccessToken.token,
+	});
+
+	const issueData = {
+		owner: issue.owner,
+		repo: issue.repo,
+		title: issue.title,
+		body: issue.body,
+	};
+
+	const response = await octokit.issues.create(issueData);
+	return response;
 }
 
 let validClassNames = [
