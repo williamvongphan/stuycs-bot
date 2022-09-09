@@ -49,7 +49,6 @@ const getNewEntries = async (url, xmlPath) => {
 	} catch (e) {
 		console.log("There's something wrong with the XML. Not saving.");
 		console.log(e);
-		process.exit(1);
 	}
 
 	// Homework entries are in the feed.entry array
