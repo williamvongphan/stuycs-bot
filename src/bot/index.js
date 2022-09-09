@@ -7,7 +7,7 @@ const { createAppAuth } = require("@octokit/auth-app");
 const { Octokit } = require("@octokit/rest");
 
 const config = require("../data/config.json");
-const privateKey = fs.readFileSync(__dirname + '../data/private-key.pem', 'utf8')
+const privateKey = fs.readFileSync(__dirname + '/../data/private-key.pem', 'utf8')
 
 
 const createIssue = async function(issue, app) {
