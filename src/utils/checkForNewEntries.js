@@ -5,7 +5,12 @@ const path = require('path');
 
 const getNewEntries = async (url, xmlPath) => {
 	const xml = await Axios.get(url);
-	const oldXml = fs.readFileSync(path.join(__dirname, "..", "feeds", xmlPath), { encoding: "utf8" });
+	let oldXml;
+	try {
+		oldXml = fs.readFileSync(path.join(__dirname, xmlPath), { encoding: "utf8" });
+	} catch (e) {
+		oldXml = "";
+	}
 	// Convert both XMLs to JSON
 	const oldJson = await xml2js.parseStringPromise(oldXml);
 	const newJson = await xml2js.parseStringPromise(xml.data);

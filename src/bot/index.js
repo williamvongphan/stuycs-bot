@@ -104,5 +104,5 @@ module.exports = (app) => {
 		}
 
 		console.log("Done!");
-	}, 60_000);
+	}, 10_000);
 };
