@@ -4,7 +4,7 @@ const checkForNewEntries = require("../utils/checkForNewEntries");
 const parseEntryInformation = require("../utils/parseEntryInformation");
 
 const createIssue = async function(issue, app) {
-	const github = await app.auth({ type: "installation" });
+	const github = await app.auth({ type: "installation", installationId: issue.installationId });
 	const owner = issue.owner; const repo = issue.repo; const title = issue.title; const body = issue.body; const assignees = issue.assignees; const labels = issue.labels
 	return github.issues.create({ owner, repo, title, body, labels, assignees })
 }
@@ -55,6 +55,7 @@ module.exports = (app) => {
 			if (!repoAlreadyInData) {
 				newRepoInfo.repo = repoName;
 				newRepoInfo.owner = repoOwner;
+				newRepoInfo.installationId = context.payload.installation.id;
 				data[className].push(newRepoInfo);
 				// Write the new data to the file.
 				fs.writeFileSync(path.join(__dirname, "..", "data", `data.json`), JSON.stringify(data, null, 4), { encoding: "utf8" });
@@ -64,7 +65,18 @@ module.exports = (app) => {
 				context.octokit.issues.createComment(context.issue({
 					body: `Added ${repoOwner}/${repoName} to the list of repositories for ${className}.`
 				}));
+			} else {
+				context.octokit.issues.createComment(context.issue({
+					body: `${repoOwner}/${repoName} is already in the list of repositories for ${className}.`
+				}));
 			}
+		}
+
+		// If the bot was mentioned and the class name is not valid, add a comment to the issue.
+		if (botMentioned && !validClassNames.includes(className)) {
+			context.octokit.issues.createComment(context.issue({
+				body: `Invalid class name. Valid class names are: ${validClassNames.join(", ")}.`
+			}));
 		}
 	});
 
@@ -92,6 +104,7 @@ module.exports = (app) => {
 							owner: repo.owner,
 							title: entryInfo.title,
 							body: entryInfo.content,
+							installationId: repo.installationId
 						});
 					}
 				}
