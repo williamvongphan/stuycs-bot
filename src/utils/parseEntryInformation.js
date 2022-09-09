@@ -8,7 +8,7 @@ module.exports = function parseEntryInformation (entry) {
 	delete entry.content[0]._;
 	formattedEntry.title = entry.title[0]["_"];
 	formattedEntry.link = entry.link[0]["$"].href;
-	formattedEntry.content = toXML(entry.content[0]).replace(/&amp;/g, "&",).replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+	formattedEntry.content = toXML(entry.content[0]).replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 	let temp = entry.summary[0]["_"].split("Estimated");
 	formattedEntry.dueDate = temp[0].trim();
 	if (temp.length > 1) {
