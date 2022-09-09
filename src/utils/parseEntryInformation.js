@@ -9,5 +9,7 @@ module.exports = function parseEntryInformation (entry) {
 	if (temp.length > 1) {
 		formattedEntry.estimatedTime = temp[1].trim();
 	}
+
+	console.log(formattedEntry);
 	return formattedEntry;
 }

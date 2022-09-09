@@ -17,8 +17,6 @@ function cleanXml(xml) {
 		xml = xml.replace(new RegExp(key, "g"), thingsToReplace[key]);
 	}
 
-	console.log(xml);
-
 	return xml;
 }
 
