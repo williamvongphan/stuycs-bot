@@ -12,8 +12,8 @@ const getNewEntries = async (url, xmlPath) => {
 		oldXml = "";
 	}
 	// Convert both XMLs to JSON
-	const oldJson = await xml2js.parseStringPromise(oldXml);
-	const newJson = await xml2js.parseStringPromise(xml.data);
+	const oldJson = xml2js.parseStringSync(oldXml);
+	const newJson = xml2js.parseStringSync(xml.data);
 
 	console.log(oldJson);
 
