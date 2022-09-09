@@ -44,8 +44,8 @@ const getNewEntries = async (url, xmlPath) => {
 	let oldJson;
 	let newJson;
 	try {
-		oldJson = await parseXml(cleanXml(oldXml));
-		newJson = await parseXml(cleanXml(xml.data));
+		oldJson = await parseXml(oldXml);
+		newJson = await parseXml(xml.data);
 	} catch (e) {
 		console.log("There's something wrong with the XML. Not saving.");
 		console.log(e);
@@ -72,7 +72,7 @@ const getNewEntries = async (url, xmlPath) => {
 	}
 
 	// Write the new XML to the file
-	fs.writeFileSync(path.join(__dirname, "..", "feeds", xmlPath), xml.data, { encoding: "utf8" });
+	fs.writeFileSync(path.join(__dirname, "..", "feeds", xmlPath), cleanXml(xml.data), { encoding: "utf8" });
 	return newEntriesArray;
 }
 
