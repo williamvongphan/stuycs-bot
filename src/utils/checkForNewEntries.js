@@ -67,6 +67,7 @@ const getNewEntries = async (url, xmlPath) => {
 		}
 		if (isNew) {
 			newEntriesArray.push(newEntries[i]);
+			console.log(newEntries[i]);
 		}
 	}
 
