@@ -10,9 +10,6 @@ const { Octokit } = require("@octokit/rest");
 const config = require("../data/config.json");
 const privateKey = fs.readFileSync(__dirname + '/../data/private-key.pem', 'utf8')
 
-const jstoxml = require('jstoxml');
-
-
 const createIssue = async function(issue, app) {
 	const auth = createAppAuth({
 		appId: config.appId,
@@ -25,17 +22,11 @@ const createIssue = async function(issue, app) {
 		auth: installationAccessToken.token,
 	});
 
-	console.log(issue.body);
-
-	let newBody = jstoxml.toXML(issue.body);
-
-	console.log(newBody);
-
 	const issueData = {
 		owner: issue.owner,
 		repo: issue.repo,
 		title: issue.title,
-		body: newBody,
+		body: issue.body,
 	};
 
 	const response = await octokit.issues.create(issueData);
