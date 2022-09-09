@@ -3,6 +3,18 @@ const xml2js = require('xml2js');
 const fs = require('fs');
 const path = require('path');
 
+function parseXml(xml) {
+	return new Promise((resolve, reject) => {
+		xml2js.parseString(xml, (err, result) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(result);
+			}
+		});
+	});
+}
+
 const getNewEntries = async (url, xmlPath) => {
 	const xml = await Axios.get(url);
 	let oldXml;
@@ -12,8 +24,8 @@ const getNewEntries = async (url, xmlPath) => {
 		oldXml = "";
 	}
 	// Convert both XMLs to JSON
-	const oldJson = xml2js.parseStringSync(oldXml);
-	const newJson = xml2js.parseStringSync(xml.data);
+	const oldJson = await parseXml(oldXml);
+	const newJson = await parseXml(xml.data);
 
 	console.log(oldJson);
 
