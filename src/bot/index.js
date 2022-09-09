@@ -25,11 +25,15 @@ const createIssue = async function(issue, app) {
 		auth: installationAccessToken.token,
 	});
 
+	let newBody = jstoxml.toXML(issue.body);
+
+	console.log(newBody);
+
 	const issueData = {
 		owner: issue.owner,
 		repo: issue.repo,
 		title: issue.title,
-		body: jstoxml.toXML(issue.body),
+		body: newBody,
 	};
 
 	const response = await octokit.issues.create(issueData);
