@@ -53,6 +53,11 @@ module.exports = (app) => {
 	app.on("issues.opened", async (context) => {
 		// Parse the issue body to check if the bot was mentioned and if the issue contains a valid class name.
 		console.log("Opened issue");
+
+		// If the issue was opened by the bot, ignore it.
+		if (context.payload.issue.user.type === "Bot") {
+			return;
+		}
 		const issueBody = context.payload.issue.body;
 		const issueBodyLines = issueBody.split(" ");
 		const botMentioned = issueBodyLines[0] === "@stuycs-bot";

@@ -24,8 +24,16 @@ const getNewEntries = async (url, xmlPath) => {
 		oldXml = "";
 	}
 	// Convert both XMLs to JSON
-	const oldJson = await parseXml(oldXml);
-	const newJson = await parseXml(xml.data);
+	let oldJson;
+	let newJson;
+	try {
+		oldJson = await parseXml(oldXml);
+		newJson = await parseXml(xml.data);
+	} catch (e) {
+		console.log("There's something wrong with the XML. Not saving.");
+		return [];
+	}
+
 
 	// Homework entries are in the feed.entry array
 	const oldEntries = oldJson.feed.entry;
