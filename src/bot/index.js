@@ -72,7 +72,7 @@ module.exports = (app) => {
 		newEntries["staging"] = await checkForNewEntries("https://stuycs-bot-test.thundrredstar.repl.co/feed.xml", "staging.xml");
 
 		// Now we'll fetch the data for each class and create an issue for each new entry.
-		const data = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "data.json"), { encoding: "utf8" }));
+		const data = JSON.parse(fs.readFileSync(path.join(__dirname, "../data", "data.json"), { encoding: "utf8" }));
 		for (let className in newEntries) {
 			if (newEntries[className].length > 0) {
 				const repos = data[className];
