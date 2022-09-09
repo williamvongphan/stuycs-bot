@@ -3,6 +3,7 @@ const toXML = require("to-xml").toXML;
 module.exports = function parseEntryInformation (entry) {
 	// Entry is a JSON object coming directly from xml2js
 	let formattedEntry = {};
+	entry.content[0].p = entry.content[0]._;
 	delete entry.content[0].$;
 	delete entry.content[0]._;
 	formattedEntry.title = entry.title[0]["_"];
