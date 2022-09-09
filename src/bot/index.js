@@ -3,6 +3,12 @@ const path = require('path');
 const checkForNewEntries = require("../utils/checkForNewEntries");
 const parseEntryInformation = require("../utils/parseEntryInformation");
 
+const createIssue = async function(issue, app) {
+	const github = await app.auth({ type: "installation" });
+	const owner = issue.owner; const repo = issue.repo; const title = issue.title; const body = issue.body; const assignees = issue.assignees; const labels = issue.labels
+	return github.issues.create({ owner, repo, title, body, labels, assignees })
+}
+
 let validClassNames = [
 	"apcs-mykolyk",
 	"systems-dw",
