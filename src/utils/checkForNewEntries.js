@@ -19,7 +19,7 @@ const getNewEntries = async (url, xmlPath) => {
 	const xml = await Axios.get(url);
 	let oldXml;
 	try {
-		oldXml = fs.readFileSync(path.join(__dirname, xmlPath), { encoding: "utf8" });
+		oldXml = fs.readFileSync(path.join(__dirname, "../feeds", xmlPath), { encoding: "utf8" });
 	} catch (e) {
 		oldXml = "";
 	}
