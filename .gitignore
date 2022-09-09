@@ -1,0 +1,16 @@
+.idea
+.vscode
+src/feeds/*
+src/data/*
+package-lock.json
+
+*.log
+*.swp
+*.swo
+*.swn
+*.swx
+*.swm
+
+node_modules
+
+.env
