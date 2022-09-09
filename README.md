@@ -1,5 +1,5 @@
 # StuyCS Assignments Bot
-**Opens an issue on your repository when a new assignment is posted.**
+**Opens an issue on your repository when a new assignment is posted. https://github.com/stuycs-bot** 
 
 ## Setup
 1. Go to https://github.com/apps/stuycs-bot, and press `Install`.
