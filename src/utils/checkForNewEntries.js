@@ -72,7 +72,7 @@ const getNewEntries = async (url, xmlPath) => {
 	}
 
 	// Write the new XML to the file
-	fs.writeFileSync(path.join(__dirname, "..", "feeds", xmlPath), cleanXml(xml.data), { encoding: "utf8" });
+	fs.writeFileSync(path.join(__dirname, "..", "feeds", xmlPath), xml.data, { encoding: "utf8" });
 	return newEntriesArray;
 }
 
