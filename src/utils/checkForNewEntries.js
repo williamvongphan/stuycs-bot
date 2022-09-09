@@ -3,9 +3,26 @@ const xml2js = require('xml2js');
 const fs = require('fs');
 const path = require('path');
 
+function cleanXml(xml) {
+	// Replace weird HTML notations with actual characters
+	let thingsToReplace = {
+		"&amp;": "&",
+		"&lt;": "<",
+		"&gt;": ">",
+		"&quot;": "\"",
+		"&apos;": "'",
+	};
+
+	for (let key in thingsToReplace) {
+		xml = xml.replace(new RegExp(key, "g"), thingsToReplace[key]);
+	}
+
+	return xml;
+}
+
 function parseXml(xml) {
 	return new Promise((resolve, reject) => {
-		xml2js.parseString(xml, (err, result) => {
+		xml2js.parseString(cleanXml(xml), (err, result) => {
 			if (err) {
 				reject(err);
 			} else {
@@ -33,7 +50,6 @@ const getNewEntries = async (url, xmlPath) => {
 		console.log("There's something wrong with the XML. Not saving.");
 		return [];
 	}
-
 
 	// Homework entries are in the feed.entry array
 	const oldEntries = oldJson.feed.entry;

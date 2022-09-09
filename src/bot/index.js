@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const checkForNewEntries = require("../utils/checkForNewEntries");
 const parseEntryInformation = require("../utils/parseEntryInformation");
 
@@ -8,6 +9,8 @@ const { Octokit } = require("@octokit/rest");
 
 const config = require("../data/config.json");
 const privateKey = fs.readFileSync(__dirname + '/../data/private-key.pem', 'utf8')
+
+const jstoxml = require('jstoxml');
 
 
 const createIssue = async function(issue, app) {
@@ -26,7 +29,7 @@ const createIssue = async function(issue, app) {
 		owner: issue.owner,
 		repo: issue.repo,
 		title: issue.title,
-		body: issue.body,
+		body: jstoxml.toXML(issue.body),
 	};
 
 	const response = await octokit.issues.create(issueData);
@@ -156,3 +159,5 @@ module.exports = (app) => {
 		console.log("Done!");
 	}, 10_000);
 };
+
+// you want members to stay right?
