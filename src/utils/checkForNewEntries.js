@@ -27,8 +27,6 @@ const getNewEntries = async (url, xmlPath) => {
 	const oldJson = await parseXml(oldXml);
 	const newJson = await parseXml(xml.data);
 
-	console.log(oldJson);
-
 	// Homework entries are in the feed.entry array
 	const oldEntries = oldJson.feed.entry;
 	const newEntries = newJson.feed.entry;
