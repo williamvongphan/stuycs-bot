@@ -108,7 +108,7 @@ module.exports = (app) => {
 
 		// Now we'll create the issues.
 		for (let repo of targetRepos) {
-			app.createIssue(repo.owner, repo.repo, repo.title, repo.body);
+			await createIssue(repo, app);
 		}
 
 		console.log("Done!");
