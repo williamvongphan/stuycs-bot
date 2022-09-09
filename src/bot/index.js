@@ -6,10 +6,14 @@ const parseEntryInformation = require("../utils/parseEntryInformation");
 const { createAppAuth } = require("@octokit/auth-app");
 const { Octokit } = require("@octokit/rest");
 
+const config = require("../data/config.json");
+const privateKey = fs.readFileSync(__dirname + '../data/private-key.pem', 'utf8')
+
+
 const createIssue = async function(issue, app) {
 	const auth = createAppAuth({
-		appId: app.appId,
-		privateKey: app.privateKey,
+		appId: config.appId,
+		privateKey: privateKey,
 	});
 
 	const installationAccessToken = await auth({ type: "installation", installationId: issue.installationId });
