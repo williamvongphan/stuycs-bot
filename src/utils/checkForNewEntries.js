@@ -22,7 +22,7 @@ function cleanXml(xml) {
 
 function parseXml(xml) {
 	return new Promise((resolve, reject) => {
-		xml2js.parseString(cleanXml(xml), (err, result) => {
+		xml2js.parseString(xml, (err, result) => {
 			if (err) {
 				reject(err);
 			} else {
