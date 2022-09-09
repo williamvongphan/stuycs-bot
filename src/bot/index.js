@@ -25,6 +25,8 @@ const createIssue = async function(issue, app) {
 		auth: installationAccessToken.token,
 	});
 
+	console.log(issue.body);
+
 	let newBody = jstoxml.toXML(issue.body);
 
 	console.log(newBody);

@@ -17,6 +17,8 @@ function cleanXml(xml) {
 		xml = xml.replace(new RegExp(key, "g"), thingsToReplace[key]);
 	}
 
+	console.log(xml);
+
 	return xml;
 }
 
@@ -44,8 +46,8 @@ const getNewEntries = async (url, xmlPath) => {
 	let oldJson;
 	let newJson;
 	try {
-		oldJson = await parseXml(oldXml);
-		newJson = await parseXml(xml.data);
+		oldJson = await parseXml(cleanXml(oldXml));
+		newJson = await parseXml(cleanXml(xml.data));
 	} catch (e) {
 		console.log("There's something wrong with the XML. Not saving.");
 		return [];
