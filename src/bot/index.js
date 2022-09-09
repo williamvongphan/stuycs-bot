@@ -22,6 +22,7 @@ let urls = [
 module.exports = (app) => {
 	app.on("issues.opened", async (context) => {
 		// Parse the issue body to check if the bot was mentioned and if the issue contains a valid class name.
+		console.log("Opened issue");
 		const issueBody = context.payload.issue.body;
 		const issueBodyLines = issueBody.split(" ");
 		const botMentioned = issueBodyLines[0] === "@stuycs-bot";
@@ -29,6 +30,7 @@ module.exports = (app) => {
 
 		// If the bot was mentioned and the class name is valid, create a new issue.
 		if (botMentioned && validClassNames.includes(className)) {
+			console.log("Bot mentioned, adding issue");
 			// Get the object corresponding with all the repositories for the class.
 			const data = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", `data.json`), { encoding: "utf8" }));
 			// Create a new object to store the new repo info.
