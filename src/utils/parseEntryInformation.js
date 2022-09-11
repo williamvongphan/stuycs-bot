@@ -3,9 +3,13 @@ const toXML = require("to-xml").toXML;
 module.exports = function parseEntryInformation (entry) {
 	// Entry is a JSON object coming directly from xml2js
 	let formattedEntry = {};
-	entry.content[0].p = entry.content[0]._;
-	delete entry.content[0].$;
-	delete entry.content[0]._;
+	if (entry.content[0]._) {
+		entry.content[0].p = entry.content[0]._;
+		delete entry.content[0].$;
+		delete entry.content[0]._;
+	} else {
+		delete entry.content[0].$;
+	}
 	formattedEntry.title = entry.title[0]["_"];
 	formattedEntry.link = entry.link[0]["$"].href;
 	formattedEntry.content = toXML(entry.content[0]).replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
