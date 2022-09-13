@@ -11,7 +11,7 @@
 7. Resolve the issue with `Completed #<issue number>` to close the issue.
 
 ## Notes
-1. Class name comes directly after the `@stuycs-bot` mention. Class name can be one of: `apcs-mykolyk`, `systems-dw`, `graphics-dw`, or `softdev-mykolyk`  
+1. Class name comes directly after the `@stuycs-bot` mention. Class name can be one of: `apcs-mykolyk`, `intro-mykolyk`, `systems-dw`, `graphics-dw`, `nextcs-dw`, or `softdev-mykolyk`.  
 Example:`@stuycs-bot apcs-mykolyk`
 2. If you don't want to receive these issues anymore, please let me know. I'll remove you manually.
 
