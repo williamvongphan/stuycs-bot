@@ -35,7 +35,9 @@ const createIssue = async function(issue, app) {
 
 let validClassNames = [
 	"apcs-mykolyk",
+	"intro-mykolyk",
 	"systems-dw",
+	"nextcs-dw",
 	"graphics-dw",
 	"softdev-mykolyk",
 	"staging"
@@ -43,7 +45,9 @@ let validClassNames = [
 
 let urls = [
 	"https://www.stuycs.org/apcs-mykolyk/feed.xml",
+	"https://www.stuycs.org/intro-mykolyk/feed.xml",
 	"https://www.stuycs.org/systems-dw/feed.xml",
+	"https://www.stuycs.org/nextcs-dw/feed.xml",
 	"https://www.stuycs.org/graphics-dw/feed.xml",
 	"https://www.stuycs.org/softdev-mykolyk/feed.xml",
 	"https://stuycs-bot-test.thundrredstar.repl.co/feed.xml"
@@ -114,11 +118,13 @@ module.exports = (app) => {
 		// Scrape the feeds for new entries.
 		let targetRepos = [];
 		let newEntries = {};
-		newEntries["apcs-mykolyk"] = await checkForNewEntries("https://www.stuycs.org/apcs-mykolyk/feed.xml", "apcs-mykolyk.xml");
-		newEntries["systems-dw"] = await checkForNewEntries("https://www.stuycs.org/systems-dw/feed.xml", "systems-dw.xml");
-		newEntries["graphics-dw"] = await checkForNewEntries("https://www.stuycs.org/graphics-dw/feed.xml", "graphics-dw.xml");
-		newEntries["softdev-mykolyk"] = await checkForNewEntries("https://www.stuycs.org/softdev-mykolyk/feed.xml", "softdev-mykolyk.xml");
-		newEntries["staging"] = await checkForNewEntries("https://stuycs-bot-test.thundrredstar.repl.co/feed.xml", "staging.xml");
+		// For each course, check for entries using the checkForNewEntries function.
+		for (let i = 0; i < urls.length; i++) {
+			let entries = await checkForNewEntries(urls[i], validClassNames[i] + ".xml");
+			if (entries.length > 0) {
+				newEntries[validClassNames[i]] = entries;
+			}
+		}
 
 		// Now we'll fetch the data for each class and create an issue for each new entry.
 		const data = JSON.parse(fs.readFileSync(path.join(__dirname, "../data", "data.json"), { encoding: "utf8" }));
@@ -139,12 +145,6 @@ module.exports = (app) => {
 				}
 			}
 		}
-
-		console.log("There were a total of " + newEntries["apcs-mykolyk"].length + " new entries for APCS.");
-		console.log("There were a total of " + newEntries["systems-dw"].length + " new entries for Systems.");
-		console.log("There were a total of " + newEntries["graphics-dw"].length + " new entries for Graphics.");
-		console.log("There were a total of " + newEntries["softdev-mykolyk"].length + " new entries for SoftDev.");
-		console.log("There were a total of " + newEntries["staging"].length + " new entries for Staging.");
 
 		console.log("There were a total of " + targetRepos.length + " new issues to create.");
 
